@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-manrope: "Manrope", ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary: #a33818;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #c44f2e;
+  --color-on-primary-container: #fffbff;
+  
+  --color-secondary: #4c56af;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #959efd;
+  --color-on-secondary-container: #27308a;
+
+  --color-tertiary: #8b4c11;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #a96428;
+  --color-on-tertiary-container: #fffbff;
+
+  --color-background: #fbf9f5;
+  --color-on-background: #1b1c1a;
+  
+  --color-surface: #fbf9f5;
+  --color-on-surface: #1b1c1a;
+  --color-on-surface-variant: #58423c;
+
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f5f3ef;
+  --color-surface-container: #efeeea;
+  --color-surface-container-high: #eae8e4;
+  --color-surface-container-highest: #e4e2de;
+
+  --color-outline: #8b716a;
+  --color-outline-variant: #dfc0b8;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-on-surface font-[Manrope] antialiased;
+  }
+}
+
+.shadow-tinted {
+  box-shadow: 0 10px 25px -5px rgba(26, 35, 126, 0.08), 0 8px 10px -6px rgba(26, 35, 126, 0.08);
+}
+
+.terracotta-gradient {
+  background: linear-gradient(135deg, #a33818 0%, #c44f2e 100%);
+}
