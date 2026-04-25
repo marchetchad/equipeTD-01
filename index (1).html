@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MarchéTchad — La Réputation Commence Ici</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --terra: #E65100;
+  --gold: #C5A059;
+  --dark: #1A1005;
+  --cream: #FDF6EC;
+  --white: #FFFFFF;
+  --green: #2E7D32;
+  --blue: #1565C0;
+  --muted: #8A7A6A;
+  --border: rgba(197, 160, 89, 0.2);
+  --glass: rgba(255, 255, 255, 0.8);
+  --font-heading: 'Bebas Neue', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--cream);
+  color:var(--dark);
+  font-family: var(--font-body);
+  overflow-x:hidden;
+}
+
+/* ─── CUSTOM CURSOR ─── */
+.cursor-follower {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease-out;
+}
+
+/* ─── NOISE TEXTURE ─── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:0.6;
+}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.5rem 4%;
+  background:var(--glass);
+  backdrop-filter:blur(30px) saturate(180%);
+  -webkit-backdrop-filter:blur(30px) saturate(180%);
+  border-bottom:1px solid var(--border);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+nav.scrolled {
+  padding: 1rem 4%;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+.nav-logo{
+  font-family: var(--font-heading);
+  font-size:2rem;letter-spacing:3px;
+  color:var(--dark);
+}
+.nav-logo span{color:var(--terra);}
+.nav-links{display:flex;gap:3rem;list-style:none;}
+.nav-links a{
+  color:var(--dark);opacity:0.6;
+  text-decoration:none;font-size:0.75rem;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;
+  transition:all 0.4s;
+}
+.nav-links a:hover{opacity:1;color:var(--terra);transform: translateY(-2px);}
+.nav-cta{
+  background:var(--dark);color:#fff;
+  padding:0.7rem 2rem;border-radius:2px;
+  text-decoration:none;font-weight:700;font-size:0.8rem;
+  letter-spacing:2px;transition:all 0.4s;
+}
+.nav-cta:hover{background:var(--terra);transform: translateY(-2px);box-shadow: 0 15px 30px rgba(230, 81, 0, 0.2);}
+
+/* ─── HERO ─── */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  padding:8rem 4% 4rem;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(197, 160, 89, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(230, 81, 0, 0.05) 0%, transparent 40%),
+    var(--cream);
+}
+.hero-pattern{
+  position:absolute;inset:0;
+  background-image: 
+    radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black, transparent 90%);
+}
+.hero-tag{
+  background:rgba(197, 160, 89, 0.1);
+  border:1px solid rgba(197, 160, 89, 0.2);
+  color:var(--gold);
+  padding:0.6rem 2rem;border-radius:100px;
+  font-size:0.7rem;letter-spacing:4px;text-transform:uppercase;
+  margin-bottom:3rem;
+  animation:fadeBlurUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-title{
+  font-family: var(--font-heading);
+  font-size:clamp(6.5rem,20vw,16rem);
+  line-height:0.8;
+  text-align:center;
+  letter-spacing:-3px;
+  color: var(--dark);
+  animation:fadeBlurUp 1.2s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  position:relative;z-index:1;
+}
+.hero-title .line1{
+  display: block;
+}
+.hero-title .line2{
+  color:transparent;
+  -webkit-text-stroke:1px rgba(26, 16, 5, 0.2);
+  display: block;
+}
+.hero-title .line2 span{
+  color:var(--terra);
+  -webkit-text-stroke:0;
+}
+.hero-sub{
+  margin-top:2rem;
+  font-size:clamp(1rem,2.5vw,1.3rem);
+  font-weight:400;color:var(--muted);
+  text-align:center;max-width:750px;
+  line-height:1.7;
+  animation:fadeUp 0.8s 0.4s ease both;
+}
+.hero-sub strong{color:var(--gold);font-weight:600;}
+.hero-actions{
+  margin-top:3rem;display:flex;gap:1.2rem;flex-wrap:wrap;justify-content:center;
+  animation:fadeUp 0.8s 0.6s ease both;
+}
+.btn-primary{
+  background:var(--terra);color:#fff;
+  padding:1rem 2.5rem;border-radius:6px;
+  text-decoration:none;font-weight:700;font-size:1rem;
+  letter-spacing:1px;transition:all 0.3s;
+  border:2px solid var(--terra);
+}
+.btn-primary:hover{background:transparent;color:var(--terra);}
+.btn-secondary{
+  border:2px solid var(--border);color:var(--dark);
+  padding:1rem 2.5rem;border-radius:6px;
+  text-decoration:none;font-weight:600;font-size:1rem;
+  transition:all 0.3s;
+}
+.btn-secondary:hover{border-color:var(--terra);color:var(--terra);}
+
+.hero-stats{
+  display:flex;gap:3rem;margin-top:4rem;flex-wrap:wrap;justify-content:center;
+  animation:fadeUp 0.8s 0.8s ease both;
+}
+.hero-stat{text-align:center;}
+.hero-stat .num{
+  font-family: var(--font-heading);
+  font-size:3rem;color:var(--terra);
+  display:block;letter-spacing:1px;
+}
+.hero-stat .label{
+  font-size:0.75rem;color:var(--muted);
+  letter-spacing:1px;text-transform:uppercase;
+}
+
+/* ─── SECTION COMMONS ─── */
+section{position:relative;padding:10rem 4%;}
+.section-tag{
+  display:inline-block;
+  font-family: var(--font-mono);
+  font-size:0.75rem;letter-spacing:5px;text-transform:uppercase;
+  color:var(--terra);
+  margin-bottom:2rem;
+  opacity: 0.8;
+}
+.section-title{
+  font-family: var(--font-heading);
+  font-size:clamp(3.5rem,8vw,7rem);
+  letter-spacing:-1px;line-height:0.9;
+  margin-bottom:2rem;
+}
+.section-sub{
+  font-size:1.2rem;color:var(--muted);
+  max-width:700px;line-height:1.7;
+  font-weight: 400;
+}
+.divider{
+  width:100%;height:1px;
+  background:linear-gradient(90deg, transparent, var(--border), transparent);
+  margin:0;
+  opacity: 0.5;
+}
+
+/* ─── PROBLÈME ─── */
+#probleme{background:var(--cream);}
+.prob-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3rem;margin-top:4rem;
+  align-items:start;
+}
+.prob-text p{
+  font-size:1.1rem;line-height:1.9;
+  color:var(--muted);
+  margin-bottom:1.5rem;
+}
+.prob-text p strong{color:var(--dark);font-weight: 700;}
+.quote-block{
+  border-left:3px solid var(--gold);
+  padding:1.5rem 2rem;
+  background:rgba(242,169,59,0.05);
+  border-radius:0 8px 8px 0;
+  margin-top:2rem;
+}
+.quote-block q{
+  font-size:1.15rem;font-style:italic;
+  color:var(--gold);line-height:1.7;
+}
+.quote-block cite{
+  display:block;margin-top:0.8rem;
+  font-size:0.8rem;color:var(--muted);letter-spacing:1px;
+}
+
+.stats-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+}
+.stat-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:2px;padding:3rem 2rem;
+  position:relative;overflow:hidden;
+  transition:all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+}
+.stat-card:hover{
+  border-color:var(--terra);
+  transform:translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+.stat-card::before{
+  content:'';
+  position:absolute;top:0;left:0;width:40px;height:2px;
+  background:var(--gold);
+}
+.stat-num{
+  font-family: var(--font-heading);
+  font-size:4rem;color:var(--terra);
+  letter-spacing:0;line-height:1;
+}
+.stat-desc{
+  font-size:0.95rem;color:var(--muted);
+  margin-top:1rem;line-height:1.6;
+  font-weight: 400;
+}
+.stat-icon{
+  position:absolute;bottom:2rem;right:2rem;
+  font-size:1.5rem;opacity:0.1;
+}
+
+/* ─── SOLUTION ─── */
+#solution{background:var(--white);}
+.pillars{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;margin-top:4rem;
+  border:1px solid var(--border);border-radius:4px;
+  overflow:hidden;
+  background: var(--white);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+.pillar{
+  padding:4rem 3rem;
+  border-right:1px solid var(--border);
+  position:relative;transition:all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pillar:last-child{border-right:none;}
+.pillar:hover{background:rgba(197, 160, 89, 0.02);}
+.pillar-num{
+  font-family: var(--font-mono);
+  font-size:0.7rem;color:var(--terra);
+  letter-spacing:4px;margin-bottom:2rem;
+  display:block;opacity: 0.6;
+}
+.pillar-icon{
+  width:64px;height:64px;
+  background:var(--cream);
+  border:1px solid var(--border);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:2rem;
+  transition: all 0.5s;
+}
+.pillar:hover .pillar-icon{
+  border-color: var(--terra);
+  transform: rotate(10deg);
+}
+.pillar h3{
+  font-family: var(--font-heading);
+  font-size:2.5rem;letter-spacing:0;
+  color:var(--dark);margin-bottom:1.5rem;
+}
+.pillar p{
+  font-size:1rem;color:var(--muted);
+  line-height:1.8;
+  font-weight: 400;
+}
+.pillar ul{
+  margin-top:2rem;list-style:none;
+}
+.pillar ul li{
+  font-size:0.85rem;color:var(--dark);opacity: 0.7;
+  padding:0.6rem 0;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:0.8rem;
+}
+.pillar ul li::before{content:'';width:4px;height:4px;background:var(--terra);border-radius:50%;}
+.pillar-arrow{
+  position:absolute;right:-25px;top:50%;
+  transform:translateY(-50%);
+  width:50px;height:50px;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;color:var(--terra);
+  z-index:2;
+  transition: all 0.4s;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+.pillar:hover .pillar-arrow{
+  transform: translateY(-50%) translateX(5px);
+  border-color: var(--gold);
+}
+
+/* ─── MAQUETTES ─── */
+#maquettes{background:var(--cream);}
+.mockup-tabs{
+  display:flex;gap:0;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:2px;overflow:hidden;
+  margin-bottom:4rem;width:fit-content;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+}
+.tab-btn{
+  padding:1rem 2.5rem;
+  background:transparent;border:none;
+  color:var(--muted);
+  font-family: var(--font-body);
+  font-size:0.9rem;font-weight:600;
+  letter-spacing:1px;cursor:pointer;
+  transition:all 0.3s;
+  border-right:1px solid var(--border);
+}
+.tab-btn:last-child{border-right:none;}
+.tab-btn.active{
+  background:var(--terra);color:#fff;
+}
+.tab-btn:hover:not(.active){
+  background:rgba(0,0,0,0.02);color:var(--dark);
+}
+
+.mockup-content{display:none;}
+.mockup-content.active{display:grid;grid-template-columns:auto 1fr;gap:4rem;align-items:start;}
+
+/* Phone frame */
+.phone-frame{
+  width:300px;flex-shrink:0;
+  background:var(--white);
+  border-radius:45px;
+  border:12px solid var(--dark);
+  padding:0.6rem;
+  box-shadow: 
+    0 40px 80px -20px rgba(0,0,0,0.1),
+    inset 0 0 10px rgba(0,0,0,0.05);
+  position:relative;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.phone-frame:hover {
+  transform: translateY(-20px);
+}
+.phone-frame::before{
+  content:'';
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:110px;height:30px;background:var(--dark);
+  border-bottom-left-radius:18px;
+  border-bottom-right-radius:18px;
+  z-index: 10;
+}
+.phone-screen{
+  background:var(--cream);border-radius:35px;
+  overflow:hidden;min-height:560px;
+  position: relative;
+}
+
+/* App screen 1 - Commerce */
+.app-header{
+  background:var(--white);
+  padding:1.5rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+.app-header-top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:1.5rem;
+}
+.app-logo{
+  font-family: var(--font-heading);
+  font-size:1.2rem;color:var(--dark);letter-spacing:2px;
+}
+.app-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--terra);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.8rem;font-weight:700;color:#fff;
+}
+.app-greeting{font-size:0.75rem;color:var(--muted);font-weight: 400;}
+.app-name{font-size:1.1rem;font-weight:700;color:var(--dark);}
+.app-score-mini{
+  background:rgba(230, 81, 0, 0.05);
+  border:1px solid var(--border);
+  border-radius:100px;padding:0.4rem 1rem;
+  font-size:0.7rem;color:var(--terra);
+  font-weight:700;
+}
+.app-body{padding:1.5rem 1.2rem;}
+.app-section-title{
+  font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:1rem;font-weight: 600;
+}
+.app-tx-list{display:flex;flex-direction:column;gap:0.8rem;}
+.app-tx{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:12px;padding:1rem;
+  display:flex;justify-content:space-between;align-items:center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+.tx-name{font-size:0.85rem;font-weight:600;color:var(--dark);}
+.tx-date{font-size:0.7rem;color:var(--muted);}
+.tx-amount{
+  font-size:0.8rem;font-weight:700;
+  font-family:'Space Mono',monospace;
+}
+.tx-amount.plus{color:#4CAF50;}
+.tx-amount.minus{color:var(--terra);}
+.app-add-btn{
+  background:var(--terra);
+  border-radius:10px;padding:0.8rem;
+  text-align:center;
+  font-size:0.75rem;font-weight:700;color:#fff;
+  letter-spacing:1px;margin-top:1rem;
+}
+
+/* Score screen */
+.score-container{padding:1.2rem;}
+.score-header{text-align:center;margin-bottom:1.5rem;}
+.score-ring-wrap{position:relative;display:inline-block;margin-bottom:1rem;}
+.score-ring{
+  width:110px;height:110px;
+  border-radius:50%;
+  background:conic-gradient(var(--gold) 0deg, var(--gold) 270deg, rgba(0, 0, 0, 0.08) 270deg);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.score-ring::before{
+  content:'';
+  position:absolute;inset:10px;
+  background:var(--white);border-radius:50%;
+}
+.score-val{
+  position:relative;z-index:1;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2rem;color:var(--gold);
+}
+.score-label{
+  font-size:0.7rem;color:rgba(26, 16, 5, 0.5);
+  letter-spacing:1px;
+}
+.score-bars{display:flex;flex-direction:column;gap:0.6rem;}
+.score-bar-item{
+  display:flex;align-items:center;gap:0.5rem;
+  font-size:0.6rem;color:rgba(26, 16, 5, 0.5);
+}
+.bar-track{
+  flex:1;height:4px;background:rgba(0, 0, 0, 0.08);
+  border-radius:2px;overflow:hidden;
+}
+.bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--terra),var(--gold));}
+.badge-row{
+  display:flex;gap:0.4rem;flex-wrap:wrap;margin-top:1rem;
+}
+.badge{
+  font-size:0.55rem;
+  background:rgba(30,92,58,0.3);
+  border:1px solid rgba(30,92,58,0.6);
+  color:#6fcf97;
+  padding:0.25rem 0.5rem;border-radius:4px;
+  letter-spacing:0.5px;
+}
+.badge.orange{
+  background:rgba(196,82,26,0.2);
+  border-color:rgba(196,82,26,0.4);
+  color:var(--gold);
+}
+
+/* Microfinance screen */
+.mf-header{
+  background:var(--white);
+  padding:1.5rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+.mf-name{font-size:1.1rem;font-weight:700;color:var(--dark);}
+.mf-id{font-size:0.6rem;font-family:'Space Mono',monospace;color:rgba(26, 16, 5, 0.3);}
+.mf-body{padding:1rem;}
+.mf-score-row{
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(242,169,59,0.08);
+  border:1px solid rgba(242,169,59,0.2);
+  border-radius:8px;padding:0.8rem;
+  margin-bottom:1rem;
+}
+.mf-score-label{font-size:0.65rem;color:rgba(26, 16, 5, 0.5);}
+.mf-score-val{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.8rem;color:var(--gold);
+}
+.mf-verdict{
+  background:rgba(30,92,58,0.2);
+  border:1px solid rgba(30,92,58,0.4);
+  border-radius:8px;padding:0.8rem;
+  margin-bottom:0.8rem;
+}
+.mf-verdict-title{
+  font-size:0.65rem;color:#6fcf97;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+}
+.mf-verdict-amount{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.5rem;color:#fff;
+}
+.mf-rows{display:flex;flex-direction:column;gap:0.5rem;}
+.mf-row{
+  display:flex;justify-content:space-between;
+  font-size:0.65rem;
+  padding-bottom:0.4rem;
+  border-bottom:1px solid rgba(0, 0, 0, 0.05);
+}
+.mf-row .key{color:rgba(26, 16, 5, 0.4);}
+.mf-row .val{color:var(--dark);font-weight:600;}
+  border-bottom:1px solid #eee;
+}
+.mf-row .key{color:var(--muted);}
+.mf-row .val{color:var(--dark);font-weight:600;}
+.mf-btn{
+  background:var(--dark);
+  border:1px solid var(--dark);
+  border-radius:8px;padding:0.7rem;
+  text-align:center;font-size:0.7rem;
+  color:#fff;font-weight:700;
+  letter-spacing:1px;margin-top:1rem;
+}
+
+/* Mockup description */
+.mockup-desc{}
+.mockup-desc h3{
+  font-family: var(--font-heading);
+  font-size:3rem;letter-spacing:0;
+  color:var(--dark);margin-bottom:1.5rem;
+}
+.mockup-desc p{
+  font-size:1.1rem;color:var(--muted);
+  line-height:1.8;margin-bottom:2rem;
+}
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:0.8rem;}
+.feature-list li{
+  display:flex;align-items:flex-start;gap:1.5rem;
+  font-size:1rem;color:var(--muted);
+}
+.feat-icon{
+  width:40px;height:40px;flex-shrink:0;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;
+}
+.feat-text strong{display:block;color:var(--dark);font-weight:700;margin-bottom:0.4rem;}
+.tech-tag{
+  display:inline-block;margin-top:3rem;
+  font-family: var(--font-mono);
+  font-size:0.75rem;letter-spacing:3px;
+  color:var(--muted);
+  border:1px solid var(--border);
+  padding:0.6rem 1.2rem;border-radius:2px;
+}
+
+/* ─── BLOCKCHAIN ─── */
+#blockchain{background:#080604;}
+.chain-flow{
+  display:flex;align-items:stretch;
+  gap:0;margin-top:4rem;
+  border:1px solid var(--border);border-radius:16px;
+  overflow:hidden;
+}
+.chain-step{
+  flex:1;padding:4rem 2.5rem;
+  border-right:1px solid var(--border);
+  position:relative;background:var(--white);
+  transition:all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.chain-step:hover{background:rgba(197, 160, 89, 0.03);}
+.chain-step-num{
+  font-family: var(--font-mono);
+  font-size:0.7rem;color:var(--gold);
+  letter-spacing:4px;margin-bottom:1.5rem;
+}
+.chain-step-icon{
+  width:56px;height:56px;border-radius:50%;
+  background:var(--cream);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:2rem;
+}
+.chain-step h4{
+  font-family: var(--font-heading);
+  font-size:1.8rem;letter-spacing:0;
+  color:var(--dark);margin-bottom:1rem;
+}
+.chain-step p{
+  font-size:0.95rem;color:var(--muted);
+  line-height:1.7;font-weight: 400;
+}
+.chain-step-arrow{
+  position:absolute;right:-20px;top:50%;
+  transform:translateY(-50%);
+  width:40px;height:40px;
+  background:var(--white);border:1px solid var(--border);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--terra);font-size:0.8rem;z-index:2;
+}
+
+/* Hash block */
+.hash-demo{
+  margin-top:3rem;
+  background:var(--white);
+  border:1px solid var(--border);border-radius:2px;
+  padding:3rem;
+  font-family: var(--font-mono);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+}
+.hash-title{
+  font-size:0.75rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--terra);margin-bottom:2rem;
+  font-weight: 700;
+}
+.hash-block{
+  background:var(--cream);
+  border:1px solid var(--border);
+  border-radius:2px;padding:2rem;
+  margin-bottom:1rem;
+}
+.hash-block-header{
+  display:flex;justify-content:space-between;
+  font-size:0.7rem;color:var(--muted);
+  margin-bottom:1.5rem;padding-bottom:1rem;
+  border-bottom:1px solid var(--border);
+}
+.hash-row{
+  display:flex;gap:2rem;margin-bottom:0.8rem;
+  font-size:0.75rem;
+}
+.hash-key{color:var(--gold);min-width:140px;font-weight: 700;}
+.hash-val{color:var(--dark);word-break:break-all;}
+.hash-val.highlight{color:var(--green);font-weight: 700;}
+.chain-link-indicator{
+  text-align:center;font-size:0.75rem;
+  color:rgba(242,169,59,0.4);margin:0.5rem 0;
+  letter-spacing:2px;
+}
+
+/* ─── IMPACT ─── */
+#impact{background:var(--cream);}
+.impact-grid{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:1.5rem;margin-top:4rem;
+}
+.impact-card{
+  border:1px solid var(--border);
+  border-radius:4px;padding:4rem 2.5rem;
+  background:var(--white);
+  transition:all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  position:relative;overflow:hidden;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.02);
+}
+.impact-card:hover{transform:translateY(-15px);box-shadow: 0 25px 50px rgba(0,0,0,0.05);}
+.impact-card::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:4px;
+}
+.impact-card.odd1::after{background:var(--terra);}
+.impact-card.odd2::after{background:var(--green);}
+.impact-card.odd8::after{background:var(--blue);}
+.odd-badge{
+  display:inline-block;
+  font-family: var(--font-mono);
+  font-size:0.65rem;letter-spacing:3px;
+  padding:0.4rem 1rem;border-radius:100px;
+  margin-bottom:2rem;font-weight:700;
+}
+.odd1 .odd-badge{background:rgba(230, 81, 0, 0.1);color:var(--terra);}
+.odd2 .odd-badge{background:rgba(242, 169, 59, 0.1);color:var(--gold);}
+.odd8 .odd-badge{background:rgba(28, 28, 28, 0.1);color:var(--dark);}
+.impact-num{
+  font-family: var(--font-heading);
+  font-size:5rem;letter-spacing:-1px;
+  color:var(--terra);line-height:0.9;
+}
+.impact-desc{
+  font-size:1.05rem;color:var(--muted);
+  margin-top:1.5rem;line-height:1.6;
+  font-weight: 400;
+}
+
+/* ─── ODD SECTION ─── */
+.odd-row{
+  display:flex;gap:1.5rem;margin-top:2rem;flex-wrap:wrap;
+}
+.odd-pill{
+  display:flex;align-items:center;gap:1rem;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:2px;padding:1rem 1.5rem;
+}
+.odd-num{
+  font-family: var(--font-heading);
+  font-size:2rem;color:var(--terra);
+  line-height:1;
+}
+.odd-text{font-size:0.9rem;color:var(--muted);max-width:180px;}
+
+/* ─── TEAM / CTA ─── */
+#cta{
+  background: var(--white);
+  text-align:center;padding:12rem 4%;
+  position:relative;overflow:hidden;
+}
+#cta::before{
+  content:'M T';
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family: var(--font-heading);
+  font-size:clamp(10rem,30vw,40rem);
+  color:rgba(0, 0, 0, 0.02);
+  letter-spacing:5px;white-space:nowrap;
+  pointer-events:none;
+}
+.cta-tag{
+  display:inline-block;
+  background:rgba(230, 81, 0, 0.05);
+  border:1px solid var(--border);
+  color:var(--terra);
+  font-size:0.75rem;letter-spacing:4px;
+  padding:0.6rem 2rem;border-radius:100px;
+  text-transform:uppercase;margin-bottom:3rem;
+}
+#cta h2{
+  font-family: var(--font-heading);
+  font-size:clamp(5rem,12vw,10rem);
+  letter-spacing:-3px;margin-bottom:2rem;
+  line-height: 0.8;
+  color: var(--dark);
+}
+#cta p{
+  font-size:1.35rem;color:var(--muted);
+  max-width:750px;margin:0 auto 4rem;
+  line-height:1.7;font-weight: 300;
+}
+.hackathon-badge{
+  display:inline-flex;align-items:center;gap:2rem;
+  border:1px solid var(--border);
+  border-radius:2px;padding:2rem 3rem;
+  margin-top:4rem;
+  background:var(--cream);
+}
+.hackathon-badge .logo{
+  font-family: var(--font-heading);
+  font-size:2rem;color:var(--gold);letter-spacing:2px;
+}
+.hackathon-badge .info{text-align:left;}
+.hackathon-badge .info small{
+  display:block;font-size:0.65rem;
+  color:rgba(26, 16, 5, 0.4);letter-spacing:1px;
+  text-transform:uppercase;
+}
+.hackathon-badge .info span{
+  font-size:0.85rem;color:rgba(26, 16, 5, 0.7);
+}
+
+/* ─── FOOTER ─── */
+footer{
+  background:var(--cream);
+  padding:6rem 4%;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:3rem;
+}
+.footer-logo{
+  font-family: var(--font-heading);
+  font-size:2rem;color:var(--dark);letter-spacing:3px;
+}
+.footer-logo span{color:var(--terra);}
+footer p{font-size:0.85rem;color:var(--muted);letter-spacing: 1px;}
+.footer-links{display:flex;gap:4rem;}
+.footer-links a{
+  font-size:0.8rem;color:var(--dark);opacity: 0.5;
+  text-decoration:none;letter-spacing:2px;
+  text-transform: uppercase;
+  transition:all 0.3s;
+}
+.footer-links a:hover{opacity: 1; color:var(--terra);}
+
+/* ─── CUSTOM SCROLLBAR ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--dark);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 193, 7, 0.2);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* ─── SCROLL ANIMATIONS ─── */
+.reveal{
+  opacity:0;transform:translateY(40px) scale(0.98);
+  filter: blur(10px);
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible{
+  opacity:1;transform:none;
+  filter: blur(0);
+}
+
+@keyframes fadeBlurUp{
+  from{opacity:0;transform:translateY(50px);filter:blur(20px);}
+  to{opacity:1;transform:none;filter:blur(0);}
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(40px);}
+  to{opacity:1;transform:none;}
+}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .prob-grid,.pillars,.chain-flow,.impact-grid{grid-template-columns:1fr;}
+  .pillars{border-radius:12px;}
+  .pillar{border-right:none;border-bottom:1px solid var(--border);}
+  .chain-step{border-right:none;border-bottom:1px solid var(--border);}
+  .chain-step-arrow{display:none;}
+  .mockup-content.active{grid-template-columns:1fr;}
+  .phone-frame{margin:0 auto;}
+  .nav-links{display:none;}
+  .stats-grid{grid-template-columns:1fr;}
+  .odd-row{flex-direction:column;}
+}
+@media(max-width:600px){
+  nav{padding:1rem 4%;}
+  .hero-stats{gap:1.5rem;}
+  .mockup-tabs{flex-wrap:wrap;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav>
+  <div class="nav-logo">Marché<span>Tchad</span></div>
+  <ul class="nav-links">
+    <li><a href="#probleme">Problème</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#maquettes">Maquettes</a></li>
+    <li><a href="#blockchain">Blockchain</a></li>
+    <li><a href="#impact">Impact</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">MIABE 2026</a>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-tag">🇹🇩 TCHAD · PROJET TD-02 · MIABE HACKATHON 2026</div>
+  <h1 class="hero-title">
+    <span class="line1">MARCHÉ</span><br>
+    <span class="line2">T<span>CH</span>AD</span>
+  </h1>
+  <p class="hero-sub">
+    <strong>La première plateforme blockchain</strong> qui transforme des années de commerce informel tchadien en réputation vérifiable, en accès au microcrédit et en justice documentée.
+  </p>
+  <div class="hero-actions">
+    <a href="#solution" class="btn-primary">Découvrir la solution</a>
+    <a href="#maquettes" class="btn-secondary">Voir les maquettes</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="num">75%</span>
+      <span class="label">Économie informelle</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">3M+</span>
+      <span class="label">Utilisateurs Mobile Money</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">60%</span>
+      <span class="label">Femmes commerçantes</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">&lt;10%</span>
+      <span class="label">Accès au crédit formel</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════ PROBLÈME ═══════════════════ -->
+<section id="probleme">
+  <div class="section-tag">01 — Diagnostic</div>
+  <h2 class="section-title reveal">LE PROBLÈME<br>RÉEL</h2>
+  <p class="section-sub reveal">Le commerce tchadien est vivant, massif, structurant — et totalement invisible aux yeux des institutions financières.</p>
+
+  <div class="prob-grid">
+    <div class="prob-text reveal">
+      <p>Les marchés hebdomadaires de <strong>N'Djamena, Moundou, Sarh</strong> et des centaines de bourgs intermédiaires font vivre des millions de familles tchadiennes. Chaque jour, des milliers de transactions ont lieu entre producteurs agricoles, éleveurs, grossistes et détaillants.</p>
+      <p>Pourtant, chaque transaction se fait <strong>en cash, sans reçu, sans historique</strong>. Un commerçant peut être régulier, fiable et sérieux depuis 20 ans — il n'a <strong>aucune preuve à montrer</strong> à une banque, aucun dossier à présenter à un investisseur.</p>
+      <p>Les conflits commerciaux — livraisons non respectées, paiements non honorés — constituent la <strong>2ème cause de litiges civils</strong> dans les tribunaux tchadiens. Sans documentation, ils n'ont aucun recours.</p>
+      <p><strong>Les femmes commerçantes</strong>, qui représentent 60% des acteurs des marchés, sont les premières victimes de cette exclusion systémique du crédit formel.</p>
+      <div class="quote-block">
+        <q>Je travaille depuis 15 ans sur ce marché, tout le monde me connaît. Mais la banque me dit que je n'existe pas.</q>
+        <cite>— Commerçante, Marché de Dembé, N'Djamena</cite>
+      </div>
+    </div>
+    <div class="stats-grid reveal">
+      <div class="stat-card">
+        <div class="stat-num">75%</div>
+        <div class="stat-desc">de l'activité économique tchadienne est dans le secteur informel — sans trace documentée</div>
+        <div class="stat-icon">📊</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">&lt;10%</div>
+        <div class="stat-desc">des commerçants tchadiens ont accès à un compte bancaire ou à du microcrédit formel</div>
+        <div class="stat-icon">🏦</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3M+</div>
+        <div class="stat-desc">d'utilisateurs actifs Mobile Money au Tchad en 2023 (Airtel Money, Moov) — l'infrastructure existe</div>
+        <div class="stat-icon">📱</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">N°2</div>
+        <div class="stat-desc">Les conflits commerciaux non résolus : 2ème cause de litiges civils dans les tribunaux tchadiens</div>
+        <div class="stat-icon">⚖️</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════ SOLUTION ═══════════════════ -->
+<section id="solution">
+  <div class="section-tag">02 — Solution</div>
+  <h2 class="section-title reveal">TROIS PILIERS.<br>UNE VÉRITÉ.</h2>
+  <p class="section-sub reveal">MarchéTchad construit une chaîne logique et imparable : chaque transaction enregistrée devient réputation, chaque réputation devient accès au crédit.</p>
+
+  <div class="pillars reveal">
+    <div class="pillar">
+      <span class="pillar-num">PILIER 01</span>
+      <div class="pillar-icon">📝</div>
+      <h3>ENREGISTREMENT</h3>
+      <p>Chaque vente, achat, livraison est enregistré sur blockchain depuis le téléphone du commerçant — en quelques secondes.</p>
+      <ul>
+        <li>Interface simple, sans connexion permanente</li>
+        <li>Compatible avec téléphones bas de gamme</li>
+        <li>Confirmation par Mobile Money (Airtel, Moov)</li>
+        <li>Horodatage immuable sur blockchain</li>
+      </ul>
+      <div class="pillar-arrow">→</div>
+    </div>
+    <div class="pillar">
+      <span class="pillar-num">PILIER 02</span>
+      <div class="pillar-icon">⭐</div>
+      <h3>RÉPUTATION</h3>
+      <p>L'historique des transactions génère automatiquement un score de réputation vérifiable par n'importe quelle institution.</p>
+      <ul>
+        <li>Score calculé sur régularité et volume</li>
+        <li>Évaluations mutuelles acheteur/vendeur</li>
+        <li>Badges de fiabilité (Commerçant Certifié)</li>
+        <li>Non falsifiable — basé sur données blockchain</li>
+      </ul>
+      <div class="pillar-arrow">→</div>
+    </div>
+    <div class="pillar">
+      <span class="pillar-num">PILIER 03</span>
+      <div class="pillar-icon">💳</div>
+      <h3>MICROCRÉDIT</h3>
+      <p>Le score de réputation devient une garantie alternative, ouvrant l'accès au microcrédit aux commerçants qui en étaient exclus.</p>
+      <ul>
+        <li>Interface dédiée pour les IMF partenaires</li>
+        <li>Dossier de crédit généré automatiquement</li>
+        <li>Priorité aux femmes commerçantes</li>
+        <li>Résolution de litiges avec preuves blockchain</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════ MAQUETTES ═══════════════════ -->
+<section id="maquettes">
+  <div class="section-tag">03 — Maquettes Visuelles</div>
+  <h2 class="section-title reveal">L'APPLICATION<br>EN DÉTAIL</h2>
+  <p class="section-sub reveal">Trois interfaces conçues pour leurs utilisateurs réels : le commerçant de marché, l'analyste de microfinance, le médiateur de litiges.</p>
+
+  <div class="mockup-tabs reveal">
+    <button class="tab-btn active" onclick="switchTab('commerce')">📱 App Commerçant</button>
+    <button class="tab-btn" onclick="switchTab('score')">⭐ Score de Réputation</button>
+    <button class="tab-btn" onclick="switchTab('microfinance')">🏦 Interface Microfinance</button>
+  </div>
+
+  <!-- Tab 1 -->
+  <div class="mockup-content active" id="tab-commerce">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="app-header">
+          <div class="app-header-top">
+            <span class="app-logo">MARCHÉ<span style="color:var(--terra)">TCHAD</span></span>
+            <div class="app-avatar">FD</div>
+          </div>
+          <div class="app-greeting">Bonjour,</div>
+          <div class="app-name">Fatimé Djabar 👋</div>
+          <div style="margin-top:0.5rem;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:0.7rem;color:rgba(26, 16, 5, 0.4);">Score actuel</span>
+            <span class="app-score-mini">⭐ 847 / 1000</span>
+          </div>
+        </div>
+        <div class="app-body">
+          <div class="app-section-title">Transactions récentes</div>
+          <div class="app-tx-list">
+            <div class="app-tx">
+              <div class="tx-left">
+                <div class="tx-name">Vente — Mil (50kg)</div>
+                <div class="tx-date">Aujourd'hui, 09:14</div>
+              </div>
+              <div class="tx-amount plus">+12 500 F</div>
+            </div>
+            <div class="app-tx">
+              <div class="tx-left">
+                <div class="tx-name">Achat — Fournisseur Koné</div>
+                <div class="tx-date">Hier, 14:32</div>
+              </div>
+              <div class="tx-amount minus">−8 000 F</div>
+            </div>
+            <div class="app-tx">
+              <div class="tx-left">
+                <div class="tx-name">Vente — Légumes marché</div>
+                <div class="tx-date">22 Avr, 07:55</div>
+              </div>
+              <div class="tx-amount plus">+7 200 F</div>
+            </div>
+            <div class="app-tx">
+              <div class="tx-left">
+                <div class="tx-name">Livraison confirmée ✓</div>
+                <div class="tx-date">21 Avr, 11:00</div>
+              </div>
+              <div class="tx-amount plus">+18 000 F</div>
+            </div>
+          </div>
+          <div class="app-add-btn">+ ENREGISTRER UNE TRANSACTION</div>
+        </div>
+      </div>
+    </div>
+    <div class="mockup-desc">
+      <h3>APPLICATION COMMERÇANT</h3>
+      <p>L'interface principale du commerçant. Conçue pour être utilisée sur un téléphone Android bas de gamme, en 3G intermittente, par une utilisatrice qui n'est pas forcément alphabétisée en français.</p>
+      <ul class="feature-list">
+        <li>
+          <div class="feat-icon">📝</div>
+          <div class="feat-text">
+            <strong>Enregistrement en 3 taps</strong>
+            Type de transaction → Montant → Contrepartie. Confirmation par SMS Mobile Money.
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon">📶</div>
+          <div class="feat-text">
+            <strong>Mode hors-ligne</strong>
+            Les transactions sont stockées localement et synchronisées automatiquement lors du retour en ligne.
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon">🔒</div>
+          <div class="feat-text">
+            <strong>Immutabilité blockchain</strong>
+            Chaque transaction enregistrée reçoit un hash unique. Elle ne peut plus être modifiée ou supprimée.
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon">📊</div>
+          <div class="feat-text">
+            <strong>Tableau de bord simplifié</strong>
+            Solde du mois, nombre de transactions, score de réputation visible en un coup d'œil.
+          </div>
+        </li>
+      </ul>
+      <div class="tech-tag">REACT NATIVE · BLOCKCHAIN LAYER · MOBILE MONEY API</div>
+    </div>
+  </div>
+
+  <!-- Tab 2 -->
+  <div class="mockup-content" id="tab-score">
+    <div class="phone-frame">
+      <div class="phone-screen" style="background:var(--cream);">
+        <div style="background:var(--white);padding:1.5rem 1.2rem;border-bottom:1px solid var(--border);">
+          <div style="font-size:0.65rem;letter-spacing:2px;color:rgba(26, 16, 5, 0.4);text-transform:uppercase;">Profil de réputation</div>
+          <div style="font-size:1.1rem;font-weight:700;color:var(--dark);margin-top:0.3rem;">Fatimé Djabar</div>
+          <div style="font-size:0.6rem;font-family:var(--font-mono);color:rgba(26, 16, 5, 0.3);">Marché de Dembé · Actif depuis 2019</div>
+        </div>
+        <div class="score-container">
+          <div class="score-header">
+            <div class="score-ring-wrap">
+              <div class="score-ring">
+                <span class="score-val">847</span>
+              </div>
+            </div>
+            <div class="score-label">SCORE DE CONFIANCE / 1000</div>
+          </div>
+          <div class="score-bars">
+            <div class="score-bar-item">
+              <span style="min-width:80px">Régularité</span>
+              <div class="bar-track"><div class="bar-fill" style="width:92%"></div></div>
+              <span>92%</span>
+            </div>
+            <div class="score-bar-item">
+              <span style="min-width:80px">Volume</span>
+              <div class="bar-track"><div class="bar-fill" style="width:78%"></div></div>
+              <span>78%</span>
+            </div>
+            <div class="score-bar-item">
+              <span style="min-width:80px">Litiges</span>
+              <div class="bar-track"><div class="bar-fill" style="width:95%;background:linear-gradient(90deg,#1E5C3A,#52B788)"></div></div>
+              <span>0</span>
+            </div>
+            <div class="score-bar-item">
+              <span style="min-width:80px">Évaluations</span>
+              <div class="bar-track"><div class="bar-fill" style="width:88%"></div></div>
+              <span>88%</span>
+            </div>
+          </div>
+          <div class="badge-row">
+            <span class="badge">✓ Commerçante Certifiée</span>
+            <span class="badge">✓ Zéro Litige</span>
+            <span class="badge orange">⚡ Score AAA</span>
+            <span class="badge">📅 5 ans d'activité</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mockup-desc">
+      <h3>PROFIL DE RÉPUTATION</h3>
+      <p>Le profil de réputation est l'identité commerciale numérique du commerçant. Il consolide l'ensemble de l'historique blockchain en un score lisible, partageable et non falsifiable.</p>
+      <ul class="feature-list">
+        <li>
+          <div class="feat-icon">🧮</div>
+          <div class="feat-text">
+            <strong>Algorithme de scoring transparent</strong>
+            4 dimensions : régularité des transactions, volume, absence de litiges, évaluations reçues. Formule publique et vérifiable.
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon">🔗</div>
+          <div class="feat-text">
+            <strong>Basé sur données immuables</strong>
+            Le score ne peut pas être manipulé — il est calculé en temps réel à partir des enregistrements blockchain.
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon">🏅</div>
+          <div class="feat-text">
+            <strong>Système de badges</strong>
+            Commerçant Certifié, Zéro Litige, Score AAA — des certifications visuelles pour inspirer confiance aux grossistes et IMF.
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon">📤</div>
+          <div class="feat-text">
+            <strong>Profil partageable</strong>
+            Un lien ou QR code permet à tout partenaire commercial ou institution de consulter le profil en temps réel.
+          </div>
+        </li>
+      </ul>
+      <div class="tech-tag">SMART CONTRACT · SCORE ALGORITHM · QR CODE SHARING</div>
+    </div>
+  </div>
+
+  <!-- Tab 3 -->
+  <div class="mockup-content" id="tab-microfinance">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="mf-header">
+          <div class="mf-title">Interface Microfinance</div>
+          <div class="mf-name">Dossier : Fatimé Djabar</div>
+          <div class="mf-id">ID: #MT-2024-00847 · Vérifié blockchain ✓</div>
+        </div>
+        <div class="mf-body">
+          <div class="mf-score-row">
+            <div>
+              <div class="mf-score-label">Score de Confiance</div>
+              <div class="mf-score-val">847</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:0.6rem;color:rgba(26, 16, 5, 0.4)">Équivalent crédit</div>
+              <div style="font-size:0.85rem;color:#6fcf97;font-weight:700">CLASSE A</div>
+            </div>
+          </div>
+          <div class="mf-verdict">
+            <div class="mf-verdict-title">✓ Éligible au Microcrédit</div>
+            <div class="mf-verdict-amount">Jusqu'à 250 000 FCFA</div>
+          </div>
+          <div class="mf-rows">
+            <div class="mf-row"><span class="key">Activité</span><span class="val">Commerce alimentaire</span></div>
+            <div class="mf-row"><span class="key">Ancienneté</span><span class="val">5 ans (depuis 2019)</span></div>
+            <div class="mf-row"><span class="key">Transactions</span><span class="val">1 247 enregistrées</span></div>
+            <div class="mf-row"><span class="key">CA mensuel moy.</span><span class="val">187 400 FCFA</span></div>
+            <div class="mf-row"><span class="key">Litiges</span><span class="val" style="color:#6fcf97">0 litige</span></div>
+            <div class="mf-row"><span class="key">Source</span><span class="val" style="color:rgba(26, 16, 5, 0.4);font-size:0.55rem">Blockchain MarchéTchad ·<br>Non modifiable</span></div>
+          </div>
+          <div class="mf-btn">APPROUVER LE DOSSIER</div>
+        </div>
+      </div>
+    </div>
+    <div class="mockup-desc">
+      <h3>INTERFACE MICROFINANCE</h3>
+      <p>L'interface dédiée aux institutions de microfinance (IMF) et aux agents de crédit. En quelques secondes, un analyste peut accéder à un dossier complet, vérifiable et non falsifiable d'un commerçant.</p>
+      <ul class="feature-list">
+        <li>
+          <div class="feat-icon">📂</div>
+          <div class="feat-text">
+            <strong>Dossier de crédit automatique</strong>
+            Généré à partir de l'historique blockchain. Aucune paperasse, aucun dossier manuel à constituer.
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon">✅</div>
+          <div class="feat-text">
+            <strong>Vérification instantanée</strong>
+            Les données sont sourcées directement depuis la blockchain — authentiques, horodatées, opposables en cas de litige.
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon">👩</div>
+          <div class="feat-text">
+            <strong>Priorité aux femmes exclues</strong>
+            Le système identifie et priorise les femmes commerçantes qui n'ont jamais pu accéder au crédit malgré une activité solide.
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon">⚖️</div>
+          <div class="feat-text">
+            <strong>Module de résolution de litiges</strong>
+            Les deux parties d'un conflit soumettent leur version. Les preuves blockchain disponibles tranchent objectivement.
+          </div>
+        </li>
+      </ul>
+      <div class="tech-tag">REST API · IMF DASHBOARD · LITIGE MODULE</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════ BLOCKCHAIN ═══════════════════ -->
+<section id="blockchain">
+  <div class="section-tag">04 — Composante Blockchain</div>
+  <h2 class="section-title reveal">POURQUOI LA<br>BLOCKCHAIN ?</h2>
+  <p class="section-sub reveal">La blockchain n'est pas un choix marketing. C'est la seule technologie qui rend une transaction <em>permanente, opposable et non falsifiable</em> — trois propriétés indispensables pour ce projet.</p>
+
+  <div class="chain-flow reveal">
+    <div class="chain-step">
+      <div class="chain-step-num">ÉTAPE 01</div>
+      <div class="chain-step-icon">📱</div>
+      <h4>TRANSACTION SAISIE</h4>
+      <p>Le commerçant enregistre une vente depuis son téléphone : montant, contrepartie, type de bien. Confirmation par code PIN ou Mobile Money.</p>
+      <div class="chain-step-arrow">→</div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-step-num">ÉTAPE 02</div>
+      <div class="chain-step-icon">🔐</div>
+      <h4>HACHAGE & BLOC</h4>
+      <p>Les données sont hachées (SHA-256) et encapsulées dans un bloc avec horodatage UTC. Le hash du bloc précédent est inclus — créant la chaîne.</p>
+      <div class="chain-step-arrow">→</div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-step-num">ÉTAPE 03</div>
+      <div class="chain-step-icon">🌐</div>
+      <h4>VALIDATION RÉSEAU</h4>
+      <p>Le bloc est validé par les nœuds du réseau (consensus Proof of Authority adapté au contexte africain). Enregistrement définitif en &lt; 3 secondes.</p>
+      <div class="chain-step-arrow">→</div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-step-num">ÉTAPE 04</div>
+      <div class="chain-step-icon">📊</div>
+      <h4>SCORE CALCULÉ</h4>
+      <p>Le smart contract recalcule automatiquement le score de réputation. Toute institution peut l'interroger via API publique à tout moment.</p>
+      <div class="chain-step-arrow">→</div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-step-num">ÉTAPE 05</div>
+      <div class="chain-step-icon">⚖️</div>
+      <h4>PREUVE DE LITIGE</h4>
+      <p>En cas de conflit, les enregistrements blockchain constituent des preuves opposables. Aucune des parties ne peut modifier l'historique a posteriori.</p>
+    </div>
+  </div>
+
+  <div class="hash-demo reveal">
+    <div class="hash-title">// EXEMPLE D'ENREGISTREMENT BLOCKCHAIN — TRANSACTION #MT-20240418-1247</div>
+    <div class="chain-link-indicator">◆ BLOC #14823 ◆</div>
+    <div class="hash-block">
+      <div class="hash-block-header">
+        <span>BLOC #14823 · MarchéTchad Network</span>
+        <span>2024-04-18T09:14:22Z</span>
+      </div>
+      <div class="hash-row"><span class="hash-key">tx_id:</span><span class="hash-val">MT-20240418-1247</span></div>
+      <div class="hash-row"><span class="hash-key">vendeur:</span><span class="hash-val">0x8F2a...4B1c [Fatimé Djabar]</span></div>
+      <div class="hash-row"><span class="hash-key">acheteur:</span><span class="hash-val">0x3D9f...7A2e [Grossiste Koné]</span></div>
+      <div class="hash-row"><span class="hash-key">montant:</span><span class="hash-val">12 500 FCFA</span></div>
+      <div class="hash-row"><span class="hash-key">bien:</span><span class="hash-val">Mil — 50 kg</span></div>
+      <div class="hash-row"><span class="hash-key">marché:</span><span class="hash-val">Dembé, N'Djamena — Tchad</span></div>
+      <div class="hash-row"><span class="hash-key">prev_hash:</span><span class="hash-val">a3f8d2c1b9e4...</span></div>
+      <div class="hash-row"><span class="hash-key">hash:</span><span class="hash-val highlight">7e4b9c2f1a8d3e6b0c5f2a9d4e7b1c3a...</span></div>
+      <div class="hash-row"><span class="hash-key">statut:</span><span class="hash-val" style="color:#6fcf97">✓ VALIDÉ — IMMUABLE</span></div>
+    </div>
+    <div class="chain-link-indicator">⬇ lié au bloc suivant · chaîne non modifiable</div>
+    <p style="font-size:0.75rem;color:rgba(253,246,236,0.35);margin-top:1rem;font-family:'Space Mono',monospace;">
+      // Modifier ce bloc invaliderait tous les blocs suivants. Détection immédiate par le réseau.
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════ IMPACT ═══════════════════ -->
+<section id="impact">
+  <div class="section-tag">05 — Impact & ODD</div>
+  <h2 class="section-title reveal">L'IMPACT<br>ATTENDU</h2>
+  <p class="section-sub reveal">MarchéTchad s'inscrit directement dans les Objectifs de Développement Durable 1, 2 et 8. Chaque fonctionnalité a un impact humain mesurable.</p>
+
+  <div class="impact-grid reveal">
+    <div class="impact-card odd1">
+      <div class="odd-badge">ODD 1 — FIN DE LA PAUVRETÉ</div>
+      <div class="impact-num">+250K</div>
+      <div class="impact-desc">FCFA de microcrédit accessibles par commerçant disposant d'un score AAA — un levier direct de sortie de précarité.</div>
+    </div>
+    <div class="impact-card odd2">
+      <div class="odd-badge">ODD 2 — FAIM ZÉRO</div>
+      <div class="impact-num">×3</div>
+      <div class="impact-desc">Producteurs agricoles multiplient leurs débouchés grâce à une réputation vérifiable qui rassure les acheteurs sur la fiabilité des livraisons.</div>
+    </div>
+    <div class="impact-card odd8">
+      <div class="odd-badge">ODD 8 — TRAVAIL DÉCENT</div>
+      <div class="impact-num">60%</div>
+      <div class="impact-desc">des bénéficiaires directs sont des femmes commerçantes exclues du crédit formel — MarchéTchad corrige une injustice systémique.</div>
+    </div>
+  </div>
+
+  <div class="odd-row reveal">
+    <div class="odd-pill">
+      <div class="odd-num">1</div>
+      <div class="odd-text">Réduire la pauvreté via l'accès au crédit documenté</div>
+    </div>
+    <div class="odd-pill">
+      <div class="odd-num">2</div>
+      <div class="odd-text">Sécuriser les chaînes alimentaires agricoles locales</div>
+    </div>
+    <div class="odd-pill">
+      <div class="odd-num">8</div>
+      <div class="odd-text">Travail décent et croissance économique inclusive</div>
+    </div>
+    <div class="odd-pill">
+      <div class="odd-num">16</div>
+      <div class="odd-text">Justice documentée pour les litiges commerciaux</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════ CTA ═══════════════════ -->
+<section id="cta">
+  <div class="cta-tag">MIABE HACKATHON 2026 · PHASE 1</div>
+  <h2>LA RÉPUTATION<br>COMMENCE ICI.</h2>
+  <p>Des millions de commerçants tchadiens travaillent dur, honorent leurs engagements et font vivre leur famille — sans jamais avoir de preuve à montrer. MarchéTchad change ça.</p>
+  <div class="hero-actions">
+    <a href="#probleme" class="btn-primary">Voir le diagnostic complet</a>
+    <a href="#blockchain" class="btn-secondary">Explorer la blockchain</a>
+  </div>
+  <div class="hackathon-badge">
+    <div class="logo">MBH 2026</div>
+    <div class="info">
+      <small>Projet TD-02 · Catégorie D13</small>
+      <span>MIABE Hackathon · Equipe01 Tchad </span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="footer-logo">Marché<span>Tchad</span></div>
+  <p>🇹🇩 Projet TD-02 · MIABE Hackathon 2026 · ODD 1 · 2 · 8</p>
+  <div class="footer-links">
+    <a href="#probleme">Problème</a>
+    <a href="#solution">Solution</a>
+    <a href="#maquettes">Maquettes</a>
+    <a href="#blockchain">Blockchain</a>
+  </div>
+</footer>
+
+<script>
+// ─── CUSTOM CURSOR ───
+const follower = document.createElement('div');
+follower.className = 'cursor-follower';
+document.body.appendChild(follower);
+
+document.addEventListener('mousemove', (e) => {
+  follower.style.left = e.clientX + 'px';
+  follower.style.top = e.clientY + 'px';
+});
+
+// ─── NAV SCROLL EFFECT ───
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 50) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+});
+
+// ─── TAB SWITCHING ───
+function switchTab(tab) {
+  document.querySelectorAll('.mockup-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ─── SCROLL REVEAL ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 150);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
